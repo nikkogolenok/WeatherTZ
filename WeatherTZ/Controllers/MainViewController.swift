@@ -9,6 +9,9 @@ import UIKit
 
 class MainViewController: UIViewController {
     
+    // MARK: - Variables
+    var networkWeaherManager = NetworkWeatherManager.shared
+    
     // MARK: - GUI Variables
     var imageView: UIImageView = UIImageView()
     var cityNameLabel: UILabel = UILabel()
@@ -48,6 +51,18 @@ class MainViewController: UIViewController {
         self.autolayoutTypeWindLabel()
         self.autolayoutButton()
         self.autolayoutToolBar()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        networkWeaherManager.onCompletion = { [weak self] currentWeather in
+            guard let self = self else { return }
+            
+            DispatchQueue.main.async {
+                self.updateInterfaceWith(weather: currentWeather)
+            }
+        }
     }
     
     override func didReceiveMemoryWarning() {
@@ -217,5 +232,13 @@ class MainViewController: UIViewController {
         toolBar.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0).isActive = true
         toolBar.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0).isActive = true
         toolBar.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0).isActive = true
+    }
+    
+    private func updateInterfaceWith(weather: CurrentWeather) {
+        self.imageView.image = UIImage(systemName: weather.conditionCode.systemIconNameString)
+        self.temperatureLabel.text = String(weather.temperature)
+        self.humidityLabel.text = String(weather.humidity)
+        self.pressureLabel.text = String(weather.pressure)
+        self.windLabel.text = String(weather.windSpeed)
     }
 }
