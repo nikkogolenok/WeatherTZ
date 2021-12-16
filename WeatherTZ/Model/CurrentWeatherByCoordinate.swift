@@ -8,8 +8,9 @@
 import Foundation
 
 // MARK: - CurrentWeatherData
-struct CurrentWeatherData: Codable {
-    let lat, lon: Int
+struct CurrentWeatherByCoordinate: Codable {
+    let lat: Double
+    let lon: Double
     let timezone: String
     let timezoneOffset: Int
     let current: Current

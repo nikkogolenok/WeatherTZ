@@ -9,9 +9,8 @@ import Foundation
 
 struct CurrentWeather {
     let conditionCode: Int?
-    //let coordinate
-    let latitude: Int
-    let longitude: Int
+    var cityName: String?
+    let coordinate: Coord
     let temperature: Double
     let textType: Int?
     let humidity: Int
@@ -21,10 +20,10 @@ struct CurrentWeather {
     let windName: String?
     
     
-    init(currentWeatherData: CurrentWeatherData) {
+    init(currentWeatherData: CurrentWeatherByCoordinate) {
         conditionCode = currentWeatherData.current.weather.first?.id
-        latitude = currentWeatherData.lat
-        longitude = currentWeatherData.lon
+        cityName = nil
+        coordinate = Coord(lon: Double(currentWeatherData.lon), lat: Double(currentWeatherData.lat))
         temperature = currentWeatherData.current.temp
         textType = currentWeatherData.current.weather.first?.id
         humidity = currentWeatherData.current.humidity

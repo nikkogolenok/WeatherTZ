@@ -6,11 +6,13 @@
 //
 
 import UIKit
+import CoreLocation
 
 class MainViewController: UIViewController {
     
     // MARK: - Variables
     var networkWeaherManager = NetworkWeatherManager.shared
+    let locationManager = CLLocationManager()
     
     // MARK: - GUI Variables
     var imageView: UIImageView = UIImageView()
@@ -33,7 +35,6 @@ class MainViewController: UIViewController {
     // MARK: - View Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
         
         self.autolayoutImageView()
         self.autolayoutCityNameLabel()
@@ -51,6 +52,15 @@ class MainViewController: UIViewController {
         self.autolayoutTypeWindLabel()
         self.autolayoutButton()
         self.autolayoutToolBar()
+        
+        locationManager.delegate = self
+        locationManager.desiredAccuracy = kCLLocationAccuracyKilometer
+        locationManager.requestAlwaysAuthorization()
+        
+        let status = locationManager.authorizationStatus
+        if status == .authorizedWhenInUse || status == .authorizedAlways {
+            locationManager.requestLocation()
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -61,6 +71,9 @@ class MainViewController: UIViewController {
             
             DispatchQueue.main.async {
                 self.updateInterfaceWith(weather: currentWeather)
+                
+                print("Temp \(currentWeather.temperature)")
+                print("Pressure \(currentWeather.pressure)")
             }
         }
     }
