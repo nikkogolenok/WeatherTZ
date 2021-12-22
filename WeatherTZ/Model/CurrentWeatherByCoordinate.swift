@@ -16,12 +16,19 @@ struct CurrentWeatherByCoordinate: Codable {
     let current: Current
     let minutely: [Minutely]
     //let hourly: [Current]
-    //let daily: [Daily]
+    let hourly: [Hourly]
+    let daily: [Daily]
 
     enum CodingKeys: String, CodingKey {
-        case lat, lon, timezone
+        case lat
+        case lon
+        case timezone
         case timezoneOffset = "timezone_offset"
-        case current, minutely//, hourly //daily
+        case current
+        case minutely
+        case daily
+        case hourly
+        //case hourly daily
     }
 }
 
@@ -101,47 +108,77 @@ enum Description: String, Codable {
 }
 
 // MARK: - Daily
-//struct Daily: Codable {
-//    let dt, sunrise, sunset, moonrise: Int
-//    let moonset: Int
-//    let moonPhase: Double
-//    let temp: Temp
-//    let feelsLike: FeelsLike
-//    let pressure, humidity: Int
-//    let dewPoint, windSpeed: Double
-//    let windDeg: Int
-//    let windGust: Double
-//    let weather: [Weather]
-//    let clouds: Int
-//    let pop, uvi: Double
-//    let rain, snow: Double?
-//
-//    enum CodingKeys: String, CodingKey {
-//        case dt, sunrise, sunset, moonrise, moonset
-//        case moonPhase = "moon_phase"
-//        case temp
-//        case feelsLike = "feels_like"
-//        case pressure, humidity
-//        case dewPoint = "dew_point"
-//        case windSpeed = "wind_speed"
-//        case windDeg = "wind_deg"
-//        case windGust = "wind_gust"
-//        case weather, clouds, pop, uvi, rain, snow
-//    }
-//}
+struct Daily: Codable {
+    let dt: Int
+    //let sunrise: Int
+    //let sunset: Int
+    //let moonrise: Int
+    //let moonset: Int
+    //let moonPhase: Double
+    let temp: Temp
+    //let feelsLike: FeelsLike
+    //let pressure, humidity: Int
+    //let dewPoint, windSpeed: Double
+    //let windDeg: Int
+    //let windGust: Double
+    //let weather: [Weather]
+    //let clouds: Int
+    //let pop, uvi: Double
+    //let rain, snow: Double?
+
+    enum CodingKeys: String, CodingKey {
+        case dt
+        //case sunrise
+        //case sunset
+        //case moonrise
+        //case moonset
+        //case moonPhase = "moon_phase"
+        case temp
+        //case feelsLike = "feels_like"
+        //case pressure, humidity
+        //case dewPoint = "dew_point"
+        //case windSpeed = "wind_speed"
+        //case windDeg = "wind_deg"
+        //case windGust = "wind_gust"
+        //case weather
+        //case clouds
+        //case pop
+        //case uvi
+        //case rain
+        //case snow
+    }
+}
 
 // MARK: - FeelsLike
 struct FeelsLike: Codable {
-    let day, night, eve, morn: Double
+    let day: Double
+    let night: Double
+    let eve: Double
+    let morn: Double
 }
 
 // MARK: - Temp
 struct Temp: Codable {
-    let day, min, max, night: Double
+    let day: Double
+    let min: Double
+    let max: Double
+    let night: Double
     let eve, morn: Double
 }
 
 // MARK: - Minutely
 struct Minutely: Codable {
-    let dt, precipitation: Int
+    let dt: Int
+    let precipitation: Int
+}
+
+// MARK: - Hourly
+struct Hourly: Codable {
+    let dt: Int
+    let temp: Double
+    
+    enum CodingKeys: String, CodingKey {
+        case dt
+        case temp
+    }
 }

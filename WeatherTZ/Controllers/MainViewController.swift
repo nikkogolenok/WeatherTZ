@@ -14,45 +14,106 @@ class MainViewController: UIViewController {
     var networkWeaherManager = NetworkWeatherManager.shared
     let locationManager = CLLocationManager()
     
+    // MARK: - TODO
+    let weather = CurrentWeather?.self
+    
     // MARK: - GUI Variables
-    var imageView: UIImageView = UIImageView()
-    var cityNameLabel: UILabel = UILabel()
-    var temperatureLabel: UILabel = UILabel()
-    var typeOfWeatherLabel: UILabel = UILabel()
-    var humidityImageView: UIImageView = UIImageView()
-    var humidityLabel: UILabel = UILabel()
-    var dropImageView: UIImageView = UIImageView()
-    var dropLabel: UILabel = UILabel()
-    var pressureImageView: UIImageView = UIImageView()
-    var pressureLabel: UILabel = UILabel()
-    var windImageView: UIImageView = UIImageView()
-    var windLabel: UILabel = UILabel()
-    var typeWindImageView: UIImageView = UIImageView()
-    var typeWindLabel: UILabel = UILabel()
-    var button: UIButton = UIButton()
-    var toolBar: UIToolbar = UIToolbar()
+    let mainStackView: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        
+        return view
+    }()
+    
+    let imageAndTextFieldStackView: UIStackView = {
+        let stack = UIStackView()
+        stack.translatesAutoresizingMaskIntoConstraints = false
+        stack.axis = .vertical
+        stack.distribution = .fillEqually
+        stack.spacing = 2
+        
+        return stack
+    }()
+    
+    let twoLabelStackView: UIStackView = {
+        let stack = UIStackView()
+        stack.translatesAutoresizingMaskIntoConstraints = false
+        stack.axis = .horizontal
+        stack.distribution = .fillEqually
+        stack.spacing = 2
+        
+        return stack
+    }()
+    
+    let lineViewTop: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = .gray
+        
+        return view
+    }()
+    
+    let viewContener: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        
+        return view
+    }()
+    
+    let lineViewBottom: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = .gray
+        
+        return view
+    }()
+    
+    let buttonShare: UIButton = {
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setTitle("Share", for: .normal)
+        button.setTitleColor(.red, for: .normal)
+        //button.addTarget(self, action: #selector(tapToButton), for: .touchUpInside)
+        
+        return button
+    }()
+    
+    let stackViewTop: UIStackView = {
+        let stack = UIStackView()
+        stack.translatesAutoresizingMaskIntoConstraints = false
+        stack.axis = .horizontal
+        stack.distribution = .fillEqually
+        stack.spacing = 70
+        
+        return stack
+    }()
+    
+    let stackViewBottom: UIStackView = {
+        let stack = UIStackView()
+        stack.translatesAutoresizingMaskIntoConstraints = false
+        stack.axis = .horizontal
+        stack.distribution = .fillEqually
+        stack.spacing = 70
+        
+        return stack
+    }()
     
     // MARK: - View Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.autolayoutImageView()
-        self.autolayoutCityNameLabel()
-        self.autolayoutTemperatureLabel()
-        self.autolayoutTypeOfWeatherLabel()
-        self.autolayoutHumidityImageView()
-        self.autolayoutHumidityLabel()
-        self.autolayoutDropImageView()
-        self.autolayoutDropLabel()
-        self.autolayoutPressureImageView()
-        self.autolayoutPressureLabel()
-        self.autolayoutWindImageView()
-        self.autolayoutWindLabel()
-        self.autolayoutTypeWindImageView()
-        self.autolayoutTypeWindLabel()
-        self.autolayoutButton()
-        self.autolayoutToolBar()
-        
+        title = "Today"
+    
+        setMainStackView()
+        setImageAndTextFieldStackView()
+        setTwoLabelStackView()
+        setLineViewTop()
+        setViewContener()
+        setLineViewBottom()
+        setButton()
+        setStackViewTop()
+        setStackViewBottom()
+        // MARK -
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyKilometer
         locationManager.requestAlwaysAuthorization()
@@ -67,13 +128,13 @@ class MainViewController: UIViewController {
         super.viewWillAppear(animated)
         
         networkWeaherManager.onCompletion = { [weak self] currentWeather in
-            guard let self = self else { return }
+            //guard let self = self else { return }
             
             DispatchQueue.main.async {
-                self.updateInterfaceWith(weather: currentWeather)
-                
                 print("Temp \(currentWeather.temperature)")
+                print("Humidity \(currentWeather.humidity)")
                 print("Pressure \(currentWeather.pressure)")
+                print("WindSpeed \(currentWeather.windSpeed)")
             }
         }
     }
@@ -82,176 +143,275 @@ class MainViewController: UIViewController {
         super.didReceiveMemoryWarning()
     }
     
-    private func autolayoutImageView() {
-        view.addSubview(imageView)
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        
-        imageView.topAnchor.constraint(equalTo: view.topAnchor, constant: 90).isActive = true
-        imageView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 143).isActive = true
-        imageView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -143).isActive = true
-        imageView.image = UIImage(systemName: "trash")
+    func setMainStackView()  {
+        view.addSubview(mainStackView)
+        mainStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 40).isActive = true
+        mainStackView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 40).isActive = true
+        mainStackView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -40).isActive = true
+        mainStackView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -400).isActive = true
     }
     
-    private func autolayoutCityNameLabel() {
-        view.addSubview(cityNameLabel)
-        cityNameLabel.translatesAutoresizingMaskIntoConstraints = false
+    func setImageAndTextFieldStackView() {
+        mainStackView.addSubview(imageAndTextFieldStackView)
+        imageAndTextFieldStackView.topAnchor.constraint(equalTo: mainStackView.topAnchor, constant: 0).isActive = true
+        imageAndTextFieldStackView.leadingAnchor.constraint(equalTo: mainStackView.leadingAnchor, constant: 70).isActive = true
+        imageAndTextFieldStackView.trailingAnchor.constraint(equalTo: mainStackView.trailingAnchor, constant: -70).isActive = true
+        imageAndTextFieldStackView.bottomAnchor.constraint(equalTo: mainStackView.bottomAnchor, constant: -50).isActive = true
         
-        cityNameLabel.topAnchor.constraint(equalTo: imageView.topAnchor, constant: 30).isActive = true
-        cityNameLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 143).isActive = true
-        cityNameLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -143).isActive = true
+        let imageView: UIImageView = {
+            let image = UIImageView()
+            image.image = UIImage(systemName: "clock")
+            
+            return image
+        }()
         
-        cityNameLabel.text = "London"
-        cityNameLabel.textAlignment = .center
+        let textField: UITextField = {
+            let textField = UITextField()
+            textField.placeholder = "Hello"
+        
+            return textField
+        }()
+        
+        imageAndTextFieldStackView.addArrangedSubview(imageView)
+        imageAndTextFieldStackView.addArrangedSubview(textField)
     }
     
-    private func autolayoutTemperatureLabel() {
-        view.addSubview(temperatureLabel)
-        temperatureLabel.translatesAutoresizingMaskIntoConstraints = false
+    func setTwoLabelStackView() {
+        mainStackView.addSubview(twoLabelStackView)
+        twoLabelStackView.topAnchor.constraint(equalTo: imageAndTextFieldStackView.bottomAnchor, constant: 0).isActive = true
+        twoLabelStackView.leadingAnchor.constraint(equalTo: mainStackView.leadingAnchor, constant: 0).isActive = true
+        twoLabelStackView.trailingAnchor.constraint(equalTo: mainStackView.trailingAnchor, constant: 0).isActive = true
+        twoLabelStackView.bottomAnchor.constraint(equalTo: mainStackView.bottomAnchor, constant: 0).isActive = true
         
-        temperatureLabel.topAnchor.constraint(equalTo: cityNameLabel.topAnchor, constant: 30).isActive = true
-        temperatureLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 50).isActive = true
+        let temperatureLabel: UILabel = {
+            let label = UILabel()
+            label.text = "22°C"
+            label.textAlignment = .center
+            
+            return label
+        }()
         
-        temperatureLabel.text = "22"
-        temperatureLabel.textAlignment = .center
+        let typeWeatherLabel: UILabel = {
+            let label = UILabel()
+            label.text = "Sunny"
+            label.textAlignment = .center
+            
+            return label
+        }()
+        
+        twoLabelStackView.addArrangedSubview(temperatureLabel)
+        twoLabelStackView.addArrangedSubview(typeWeatherLabel)
+        
+        func update(weather: CurrentWeather) {
+            temperatureLabel.text = String(weather.temperature.wholeNumberString)
+            typeWeatherLabel.text = weather.textTypeWeather.textNameString
+        }
     }
     
-    private func autolayoutTypeOfWeatherLabel() {
-        view.addSubview(typeOfWeatherLabel)
-        typeOfWeatherLabel.translatesAutoresizingMaskIntoConstraints = false
-        
-        typeOfWeatherLabel.topAnchor.constraint(equalTo: cityNameLabel.topAnchor, constant: 30).isActive = true
-        typeOfWeatherLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -50).isActive = true
-        
-        typeOfWeatherLabel.text = "Sunny"
-        temperatureLabel.textAlignment = .center
+    func setLineViewTop() {
+        view.addSubview(lineViewTop)
+        lineViewTop.topAnchor.constraint(equalTo: mainStackView.bottomAnchor, constant: 20).isActive = true
+        lineViewTop.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 100).isActive = true
+        lineViewTop.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -100).isActive = true
+        lineViewTop.heightAnchor.constraint(equalToConstant: view.frame.size.height - 810).isActive = true
     }
     
-    private func autolayoutHumidityImageView() {
-        view.addSubview(humidityImageView)
-        humidityImageView.translatesAutoresizingMaskIntoConstraints = false
-        
-        humidityImageView.topAnchor.constraint(equalTo: temperatureLabel.topAnchor, constant: 150).isActive = true
-        humidityImageView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 50).isActive = true
-        humidityImageView.image = UIImage(systemName: "humidity")
+    func setViewContener() {
+        view.addSubview(viewContener)
+        viewContener.topAnchor.constraint(equalTo: lineViewTop.bottomAnchor, constant: 20).isActive = true
+        viewContener.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20).isActive = true
+        viewContener.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20).isActive = true
+        viewContener.heightAnchor.constraint(equalToConstant: view.frame.size.height - 600).isActive = true
     }
     
-    private func autolayoutHumidityLabel() {
-        view.addSubview(humidityLabel)
-        humidityLabel.translatesAutoresizingMaskIntoConstraints = false
-        
-        humidityLabel.topAnchor.constraint(equalTo: humidityImageView.topAnchor, constant: 30).isActive = true
-        humidityLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 50).isActive = true
-        
-        humidityLabel.text = "57%"
-        humidityLabel.textAlignment = .center
+    func setLineViewBottom() {
+        view.addSubview(lineViewBottom)
+        lineViewBottom.topAnchor.constraint(equalTo: viewContener.bottomAnchor, constant: 20).isActive = true
+        lineViewBottom.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 100).isActive = true
+        lineViewBottom.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -100).isActive = true
+        lineViewBottom.heightAnchor.constraint(equalToConstant: view.frame.size.height - 810).isActive = true
     }
     
-    private func autolayoutDropImageView() {
-        view.addSubview(dropImageView)
-        dropImageView.translatesAutoresizingMaskIntoConstraints = false
-        
-        dropImageView.topAnchor.constraint(equalTo: temperatureLabel.topAnchor, constant: 150).isActive = true
-        dropImageView.leadingAnchor.constraint(equalTo: humidityImageView.leadingAnchor, constant: 130).isActive = true
-        dropImageView.image = UIImage(systemName: "drop")
+    func setButton() {
+        view.addSubview(buttonShare)
+        buttonShare.topAnchor.constraint(equalTo: lineViewBottom.bottomAnchor, constant: 40).isActive = true
+        buttonShare.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 150).isActive = true
+        buttonShare.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -150).isActive = true
     }
     
-    private func autolayoutDropLabel() {
-        view.addSubview(dropLabel)
-        dropLabel.translatesAutoresizingMaskIntoConstraints = false
+    func setStackViewTop() {
+        viewContener.addSubview(stackViewTop)
+        stackViewTop.topAnchor.constraint(equalTo: viewContener.topAnchor, constant: 0).isActive = true
+        stackViewTop.leadingAnchor.constraint(equalTo: viewContener.leadingAnchor, constant: 0).isActive = true
+        stackViewTop.trailingAnchor.constraint(equalTo: viewContener.trailingAnchor, constant: 0).isActive = true
+        stackViewTop.bottomAnchor.constraint(equalTo: viewContener.bottomAnchor, constant: -90).isActive = true
         
-        dropLabel.topAnchor.constraint(equalTo: dropImageView.topAnchor, constant: 30).isActive = true
-        dropLabel.leadingAnchor.constraint(equalTo: humidityLabel.leadingAnchor, constant: 110).isActive = true
+        let humidityStackView: UIStackView = {
+            let stack = UIStackView()
+            stack.translatesAutoresizingMaskIntoConstraints = false
+            stack.axis = .vertical
+            stack.distribution = .fillEqually
+            stack.spacing = 2
+            
+            let humidityImageView: UIImageView = {
+                let image = UIImageView()
+                image.image = UIImage(systemName: "humidity")
+                
+                return image
+            }()
+            
+            let humidityLabel: UILabel = {
+                let label = UILabel()
+                label.text = "57%"
+                label.textAlignment = .center
+                
+                return label
+            }()
         
-        dropLabel.text = "1.0mm"
-        dropLabel.textAlignment = .center
+            stack.addArrangedSubview(humidityImageView)
+            stack.addArrangedSubview(humidityLabel)
+            
+            func update(weather: CurrentWeather) {
+                humidityLabel.text = String(weather.humidity)
+            }
+            
+            return stack
+        }()
+        
+        let precipitationStackView: UIStackView = {
+            let stack = UIStackView()
+            stack.translatesAutoresizingMaskIntoConstraints = false
+            stack.axis = .vertical
+            stack.distribution = .fillEqually
+            stack.spacing = 2
+            
+            let dropImageView: UIImageView = {
+                let image = UIImageView()
+                image.image = UIImage(systemName: "drop")
+                
+                return image
+            }()
+            
+            let dropLabel: UILabel = {
+                let label = UILabel()
+                label.text = "1.0mm"
+                label.textAlignment = .center
+                
+                return label
+            }()
+        
+            stack.addArrangedSubview(dropImageView)
+            stack.addArrangedSubview(dropLabel)
+            
+            return stack
+        }()
+        
+        let pressureStackView: UIStackView = {
+            let stack = UIStackView()
+            stack.translatesAutoresizingMaskIntoConstraints = false
+            stack.axis = .vertical
+            stack.distribution = .fillEqually
+            stack.spacing = 2
+            
+            let pressureImageView: UIImageView = {
+                let image = UIImageView()
+                image.image = UIImage(systemName: "thermometer")
+                
+                return image
+            }()
+            
+            let pressureLabel: UILabel = {
+                let label = UILabel()
+                label.text = "1019hPa"
+                label.textAlignment = .center
+                
+                return label
+            }()
+        
+            stack.addArrangedSubview(pressureImageView)
+            stack.addArrangedSubview(pressureLabel)
+            
+            func update(weather: CurrentWeather) {
+                pressureLabel.text = String(weather.pressure)
+            }
+            
+            return stack
+        }()
+        
+        stackViewTop.addArrangedSubview(humidityStackView)
+        stackViewTop.addArrangedSubview(precipitationStackView)
+        stackViewTop.addArrangedSubview(pressureStackView)
     }
     
-    private func autolayoutPressureImageView() {
-        view.addSubview(pressureImageView)
-        pressureImageView.translatesAutoresizingMaskIntoConstraints = false
+    func setStackViewBottom() {
+        viewContener.addSubview(stackViewBottom)
+        stackViewBottom.topAnchor.constraint(equalTo: stackViewTop.bottomAnchor, constant: 0).isActive = true
+        stackViewBottom.leadingAnchor.constraint(equalTo: viewContener.leadingAnchor, constant: 60).isActive = true
+        stackViewBottom.trailingAnchor.constraint(equalTo: viewContener.trailingAnchor, constant: -60).isActive = true
+        stackViewBottom.bottomAnchor.constraint(equalTo: viewContener.bottomAnchor, constant: 0).isActive = true
         
-        pressureImageView.topAnchor.constraint(equalTo: temperatureLabel.topAnchor, constant: 150).isActive = true
-        pressureImageView.leadingAnchor.constraint(equalTo: dropImageView.leadingAnchor, constant: 130).isActive = true
-        pressureImageView.image = UIImage(systemName: "thermometer")
-    }
-    
-    private func autolayoutPressureLabel() {
-        view.addSubview(pressureLabel)
-        pressureLabel.translatesAutoresizingMaskIntoConstraints = false
+        let windSpeedStackView: UIStackView = {
+            let stack = UIStackView()
+            stack.translatesAutoresizingMaskIntoConstraints = false
+            stack.axis = .vertical
+            stack.distribution = .fillEqually
+            stack.spacing = 2
+            
+            let windImageView: UIImageView = {
+                let image = UIImageView()
+                image.image = UIImage(systemName: "wind")
+                
+                return image
+            }()
+            
+            let windLabel: UILabel = {
+                let label = UILabel()
+                label.text = "20km/h"
+                label.textAlignment = .center
+                
+                return label
+            }()
         
-        pressureLabel.topAnchor.constraint(equalTo: pressureImageView.topAnchor, constant: 30).isActive = true
-        pressureLabel.leadingAnchor.constraint(equalTo: dropLabel.leadingAnchor, constant: 115).isActive = true
+            stack.addArrangedSubview(windImageView)
+            stack.addArrangedSubview(windLabel)
+            
+            func update(weather: CurrentWeather) {
+                windLabel.text = String(weather.windSpeed)
+            }
+            
+            return stack
+        }()
         
-        pressureLabel.text = "1019hPa"
-        pressureLabel.textAlignment = .center
-    }
-    
-    private func autolayoutWindImageView() {
-        view.addSubview(windImageView)
-        windImageView.translatesAutoresizingMaskIntoConstraints = false
-
-        windImageView.topAnchor.constraint(equalTo: temperatureLabel.topAnchor, constant: 250).isActive = true
-        windImageView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 110).isActive = true
-        windImageView.image = UIImage(systemName: "wind")
-    }
-    
-    private func autolayoutWindLabel() {
-        view.addSubview(windLabel)
-        windLabel.translatesAutoresizingMaskIntoConstraints = false
+        let windTypeStackView: UIStackView = {
+            let stack = UIStackView()
+            stack.translatesAutoresizingMaskIntoConstraints = false
+            stack.axis = .vertical
+            stack.distribution = .fillEqually
+            stack.spacing = 2
+            
+            
+            let windTypeImageView: UIImageView = {
+                let image = UIImageView()
+                image.image = UIImage(systemName: "safari")
+                
+                return image
+            }()
+            
+            let windTypeTabel: UILabel = {
+                let label = UILabel()
+                label.text = "SE"
+                label.textAlignment = .center
+                
+                return label
+            }()
         
-        windLabel.topAnchor.constraint(equalTo: windImageView.topAnchor, constant: 30).isActive = true
-        windLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 100).isActive = true
+            stack.addArrangedSubview(windTypeImageView)
+            stack.addArrangedSubview(windTypeTabel)
+            
+            return stack
+        }()
         
-        windLabel.text = "20 km/h"
-        windLabel.textAlignment = .center
-    }
-    
-    private func autolayoutTypeWindImageView() {
-        view.addSubview(typeWindImageView)
-        typeWindImageView.translatesAutoresizingMaskIntoConstraints = false
-        
-        typeWindImageView.topAnchor.constraint(equalTo: temperatureLabel.topAnchor, constant: 250).isActive = true
-        typeWindImageView.leadingAnchor.constraint(equalTo: windImageView.leadingAnchor, constant: 130).isActive = true
-        typeWindImageView.image = UIImage(systemName: "pencil")
-    }
-    
-    private func autolayoutTypeWindLabel() {
-        view.addSubview(typeWindLabel)
-        typeWindLabel.translatesAutoresizingMaskIntoConstraints = false
-
-        typeWindLabel.topAnchor.constraint(equalTo: typeWindImageView.topAnchor, constant: 30).isActive = true
-        typeWindLabel.leadingAnchor.constraint(equalTo: windLabel.leadingAnchor, constant: 135).isActive = true
-
-        typeWindLabel.text = "SE"
-        typeWindLabel.textAlignment = .center
-    }
-    
-    private func autolayoutButton() {
-        view.addSubview(button)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        
-        button.topAnchor.constraint(equalTo: typeWindLabel.topAnchor, constant: 100).isActive = true
-        button.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 143).isActive = true
-        button.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -143).isActive = true
-        
-        button.setTitle("Share", for: .normal)
-        button.setTitleColor(.red, for: .normal)
-    }
-    
-    private func autolayoutToolBar() {
-        view.addSubview(toolBar)
-        toolBar.translatesAutoresizingMaskIntoConstraints = false
-        
-        toolBar.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0).isActive = true
-        toolBar.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0).isActive = true
-        toolBar.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0).isActive = true
-    }
-    
-    private func updateInterfaceWith(weather: CurrentWeather) {
-        self.imageView.image = UIImage(systemName: weather.conditionCode.systemIconNameString)
-        self.temperatureLabel.text = String(weather.temperature)
-        self.humidityLabel.text = String(weather.humidity)
-        self.pressureLabel.text = String(weather.pressure)
-        self.windLabel.text = String(weather.windSpeed)
+        stackViewBottom.addArrangedSubview(windSpeedStackView)
+        stackViewBottom.addArrangedSubview(windTypeStackView)
     }
 }
