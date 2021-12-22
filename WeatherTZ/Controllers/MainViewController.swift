@@ -158,22 +158,23 @@ class MainViewController: UIViewController {
         imageAndTextFieldStackView.trailingAnchor.constraint(equalTo: mainStackView.trailingAnchor, constant: -70).isActive = true
         imageAndTextFieldStackView.bottomAnchor.constraint(equalTo: mainStackView.bottomAnchor, constant: -50).isActive = true
         
-        let imageView: UIImageView = {
+        let weatherImageView: UIImageView = {
             let image = UIImageView()
             image.image = UIImage(systemName: "clock")
             
             return image
         }()
         
-        let textField: UITextField = {
+        let cityNametextField: UITextField = {
             let textField = UITextField()
-            textField.placeholder = "Hello"
+            textField.placeholder = "Enter city, please"
+            textField.textAlignment = .center
         
             return textField
         }()
         
-        imageAndTextFieldStackView.addArrangedSubview(imageView)
-        imageAndTextFieldStackView.addArrangedSubview(textField)
+        imageAndTextFieldStackView.addArrangedSubview(weatherImageView)
+        imageAndTextFieldStackView.addArrangedSubview(cityNametextField)
     }
     
     func setTwoLabelStackView() {
