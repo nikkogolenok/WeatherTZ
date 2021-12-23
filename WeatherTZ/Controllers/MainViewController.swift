@@ -131,7 +131,9 @@ class MainViewController: UIViewController {
             //guard let self = self else { return }
             
             DispatchQueue.main.async {
+                print("Image weather \(currentWeather.conditionCode?.systemIconNameString)")
                 print("Temp \(currentWeather.temperature)")
+                print("Type weather \(currentWeather.textTypeWeather.textNameString)")
                 print("Humidity \(currentWeather.humidity)")
                 print("Pressure \(currentWeather.pressure)")
                 print("WindSpeed \(currentWeather.windSpeed)")
@@ -203,9 +205,15 @@ class MainViewController: UIViewController {
         twoLabelStackView.addArrangedSubview(temperatureLabel)
         twoLabelStackView.addArrangedSubview(typeWeatherLabel)
         
-        func update(weather: CurrentWeather) {
-            temperatureLabel.text = String(weather.temperature.wholeNumberString)
-            typeWeatherLabel.text = weather.textTypeWeather.textNameString
+        networkWeaherManager.onCompletion = { [weak self] currentWeather in
+            //guard let self = self else { return }
+            
+            DispatchQueue.main.async {
+                func update(weather: CurrentWeather) {
+                    temperatureLabel.text = String(weather.temperature.wholeNumberString)
+                    //typeWeatherLabel.text = weather.textTypeWeather.textNameString
+                }
+            }
         }
     }
     

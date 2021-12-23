@@ -65,8 +65,8 @@ class CustomTableViewCell: UITableViewCell {
         temperatureLabel.frame = CGRect(x: 150 + temperatureImageView.frame.size.width, y: 0, width: contentView.frame.size.width - 10, height: contentView.frame.height)
     }
     
-    func setUpView(_ weather: Hourly) {
-        self.temperatureLabel.text = weather.temp.wholeNumberString
-        self.timeLabel.text = Date(timeIntervalSince1970: weather.dt).formatted("h:mm")
-    }
+//    func setUpView(_ weather: Hourly) {
+//        self.temperatureLabel.text = weather.temp.wholeNumberString
+//        self.timeLabel.text = Date(timeIntervalSince1970: weather.dt).formatted("h:mm")
+//    }
 }
