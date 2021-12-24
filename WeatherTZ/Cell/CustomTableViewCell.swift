@@ -108,7 +108,6 @@ class CustomTableViewCell: UITableViewCell {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        
         setTemperatureImageView()
         setLeadingView()
         setTrailingView()
@@ -156,5 +155,11 @@ class CustomTableViewCell: UITableViewCell {
       
         trailingStackView.addArrangedSubview(temperatureLabel)
         trailingStackView.addArrangedSubview(celsiusLabel)
+    }
+    
+    private func updateUIInCell(_ weather: Hourly) {
+        self.temperatureImageView.image = UIImage(systemName: .defaultSystemWeatherImage)
+        self.timeLabel.text = Date(timeIntervalSince1970: weather.dt).formatted("h:mm")
+        self.temperatureLabel.text = weather.temp.wholeNumberString
     }
 }

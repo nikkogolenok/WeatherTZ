@@ -15,26 +15,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     // MARK: - AppDelegat
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        
-//        let tabBarVC = UITabBarController()
-//
-//        let signVC = UINavigationController(rootViewController: SignInViewController())
-//        let mainViewController = UINavigationController(rootViewController: MainViewController())
-//        let tableViewController = UINavigationController(rootViewController: TableViewController())
-//
-//        mainViewController.title = "Today"
-//        tableViewController.title = "City"
-//
-//        tabBarVC.setViewControllers([signVC, mainViewController, tableViewController], animated: false)
-//        if let items = tabBarVC.tabBar.items {
-//            let images = ["sun.min", "clock"]
-//
-//            for x in 0..<items.count {
-//                items[x].image = UIImage(systemName: images[x])
-//            }
-//            tabBarVC.modalPresentationStyle = .fullScreen
-//        }
-        
         let mainVC = SignInViewController()
         
         window = UIWindow(frame: UIScreen.main.bounds)

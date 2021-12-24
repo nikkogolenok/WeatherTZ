@@ -307,6 +307,9 @@ class MainViewController: UIViewController {
                 print("Humidity \(currentWeather.humidity)")
                 print("Pressure \(currentWeather.pressure)")
                 print("WindSpeed \(currentWeather.windSpeed)")
+                
+                print("\(currentWeather.hourlyWeather)")
+                print("\(currentWeather.dailyWeather)")
             }
         }
     }
