@@ -116,90 +116,27 @@ class MainViewController: UIViewController {
         return stack
     }()
     
-    private let humidityStackView: UIStackView = {
-        let stack = UIStackView()
+    private let humidityStackView: SmallStackView = {
+        let stack = SmallStackView(with: .humidity)
         stack.translatesAutoresizingMaskIntoConstraints = false
-        stack.axis = .vertical
-        stack.distribution = .fillEqually
-        stack.spacing = 2
-        
-        let humidityImageView: UIImageView = {
-            let image = UIImageView()
-            image.image = UIImage(systemName: "humidity")
-            
-            return image
-        }()
-        
-        let humidityLabel: UILabel = {
-            let label = UILabel()
-            label.text = "57%"
-            label.textAlignment = .center
-            
-            return label
-        }()
-    
-        stack.addArrangedSubview(humidityImageView)
-        stack.addArrangedSubview(humidityLabel)
         
         return stack
     }()
     
-    private let precipitationStackView: UIStackView = {
-        let stack = UIStackView()
+    private let precipitationStackView: SmallStackView = {
+        let stack = SmallStackView(with: .drop)
         stack.translatesAutoresizingMaskIntoConstraints = false
-        stack.axis = .vertical
-        stack.distribution = .fillEqually
-        stack.spacing = 2
-        
-        let dropImageView: UIImageView = {
-            let image = UIImageView()
-            image.image = UIImage(systemName: "drop")
-            
-            return image
-        }()
-        
-        let dropLabel: UILabel = {
-            let label = UILabel()
-            label.text = "1.0mm"
-            label.textAlignment = .center
-            
-            return label
-        }()
-    
-        stack.addArrangedSubview(dropImageView)
-        stack.addArrangedSubview(dropLabel)
         
         return stack
     }()
     
-    private let pressureStackView: UIStackView = {
-        let stack = UIStackView()
+    private let pressureStackView: SmallStackView = {
+        let stack = SmallStackView(with: .thermometer)
         stack.translatesAutoresizingMaskIntoConstraints = false
-        stack.axis = .vertical
-        stack.distribution = .fillEqually
-        stack.spacing = 2
-        
-        let pressureImageView: UIImageView = {
-            let image = UIImageView()
-            image.image = UIImage(systemName: "thermometer")
-            
-            return image
-        }()
-        
-        let pressureLabel: UILabel = {
-            let label = UILabel()
-            label.text = "1019hPa"
-            label.textAlignment = .center
-            
-            return label
-        }()
-    
-        stack.addArrangedSubview(pressureImageView)
-        stack.addArrangedSubview(pressureLabel)
         
         return stack
     }()
-    
+  
     private let stackViewBottom: UIStackView = {
         let stack = UIStackView()
         stack.translatesAutoresizingMaskIntoConstraints = false
@@ -210,59 +147,16 @@ class MainViewController: UIViewController {
         return stack
     }()
     
-    private let windSpeedStackView: UIStackView = {
-        let stack = UIStackView()
+    private let windSpeedStackView: SmallStackView = {
+        let stack = SmallStackView(with: .wind)
         stack.translatesAutoresizingMaskIntoConstraints = false
-        stack.axis = .vertical
-        stack.distribution = .fillEqually
-        stack.spacing = 2
-        
-        let windImageView: UIImageView = {
-            let image = UIImageView()
-            image.image = UIImage(systemName: "wind")
-            
-            return image
-        }()
-        
-        let windLabel: UILabel = {
-            let label = UILabel()
-            label.text = "20km/h"
-            label.textAlignment = .center
-            
-            return label
-        }()
-    
-        stack.addArrangedSubview(windImageView)
-        stack.addArrangedSubview(windLabel)
         
         return stack
     }()
-    
-    private let windTypeStackView: UIStackView = {
-        let stack = UIStackView()
+
+    private let windTypeStackView: SmallStackView = {
+        let stack = SmallStackView(with: .safari)
         stack.translatesAutoresizingMaskIntoConstraints = false
-        stack.axis = .vertical
-        stack.distribution = .fillEqually
-        stack.spacing = 2
-        
-        
-        let windTypeImageView: UIImageView = {
-            let image = UIImageView()
-            image.image = UIImage(systemName: "safari")
-            
-            return image
-        }()
-        
-        let windTypeTabel: UILabel = {
-            let label = UILabel()
-            label.text = "SE"
-            label.textAlignment = .center
-            
-            return label
-        }()
-    
-        stack.addArrangedSubview(windTypeImageView)
-        stack.addArrangedSubview(windTypeTabel)
         
         return stack
     }()
@@ -320,18 +214,18 @@ class MainViewController: UIViewController {
     
     private func setMainStackView()  {
         view.addSubview(mainStackView)
-        mainStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 40).isActive = true
-        mainStackView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 40).isActive = true
-        mainStackView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -40).isActive = true
-        mainStackView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -400).isActive = true
+        mainStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 40).isActive              = true
+        mainStackView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 40).isActive      = true
+        mainStackView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -40).isActive   = true
+        mainStackView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -400).isActive      = true
     }
     
     private func setImageAndTextFieldStackView() {
         mainStackView.addSubview(imageAndTextFieldStackView)
-        imageAndTextFieldStackView.topAnchor.constraint(equalTo: mainStackView.topAnchor, constant: 0).isActive = true
-        imageAndTextFieldStackView.leadingAnchor.constraint(equalTo: mainStackView.leadingAnchor, constant: 70).isActive = true
+        imageAndTextFieldStackView.topAnchor.constraint(equalTo: mainStackView.topAnchor, constant: 0).isActive             = true
+        imageAndTextFieldStackView.leadingAnchor.constraint(equalTo: mainStackView.leadingAnchor, constant: 70).isActive    = true
         imageAndTextFieldStackView.trailingAnchor.constraint(equalTo: mainStackView.trailingAnchor, constant: -70).isActive = true
-        imageAndTextFieldStackView.bottomAnchor.constraint(equalTo: mainStackView.bottomAnchor, constant: -50).isActive = true
+        imageAndTextFieldStackView.bottomAnchor.constraint(equalTo: mainStackView.bottomAnchor, constant: -50).isActive     = true
         
         imageAndTextFieldStackView.addArrangedSubview(weatherImageView)
         imageAndTextFieldStackView.addArrangedSubview(cityNametextField)
@@ -339,10 +233,10 @@ class MainViewController: UIViewController {
     
     private func setTwoLabelStackView() {
         mainStackView.addSubview(twoLabelStackView)
-        twoLabelStackView.topAnchor.constraint(equalTo: imageAndTextFieldStackView.bottomAnchor, constant: 0).isActive = true
-        twoLabelStackView.leadingAnchor.constraint(equalTo: mainStackView.leadingAnchor, constant: 0).isActive = true
-        twoLabelStackView.trailingAnchor.constraint(equalTo: mainStackView.trailingAnchor, constant: 0).isActive = true
-        twoLabelStackView.bottomAnchor.constraint(equalTo: mainStackView.bottomAnchor, constant: 0).isActive = true
+        twoLabelStackView.topAnchor.constraint(equalTo: imageAndTextFieldStackView.bottomAnchor, constant: 0).isActive      = true
+        twoLabelStackView.leadingAnchor.constraint(equalTo: mainStackView.leadingAnchor, constant: 0).isActive              = true
+        twoLabelStackView.trailingAnchor.constraint(equalTo: mainStackView.trailingAnchor, constant: 0).isActive            = true
+        twoLabelStackView.bottomAnchor.constraint(equalTo: mainStackView.bottomAnchor, constant: 0).isActive                = true
         
         twoLabelStackView.addArrangedSubview(temperatureLabel)
         twoLabelStackView.addArrangedSubview(typeWeatherLabel)
@@ -350,41 +244,41 @@ class MainViewController: UIViewController {
     
     private func setLineViewTop() {
         view.addSubview(lineViewTop)
-        lineViewTop.topAnchor.constraint(equalTo: mainStackView.bottomAnchor, constant: 20).isActive = true
-        lineViewTop.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 100).isActive = true
-        lineViewTop.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -100).isActive = true
-        lineViewTop.heightAnchor.constraint(equalToConstant: view.frame.size.height - 810).isActive = true
+        lineViewTop.topAnchor.constraint(equalTo: mainStackView.bottomAnchor, constant: 20).isActive                        = true
+        lineViewTop.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 100).isActive       = true
+        lineViewTop.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -100).isActive    = true
+        lineViewTop.heightAnchor.constraint(equalToConstant: view.frame.size.height - 810).isActive                         = true
     }
     
     private func setViewContener() {
         view.addSubview(viewContener)
-        viewContener.topAnchor.constraint(equalTo: lineViewTop.bottomAnchor, constant: 20).isActive = true
-        viewContener.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20).isActive = true
-        viewContener.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20).isActive = true
-        viewContener.heightAnchor.constraint(equalToConstant: view.frame.size.height - 600).isActive = true
+        viewContener.topAnchor.constraint(equalTo: lineViewTop.bottomAnchor, constant: 20).isActive                         = true
+        viewContener.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20).isActive       = true
+        viewContener.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20).isActive    = true
+        viewContener.heightAnchor.constraint(equalToConstant: view.frame.size.height - 600).isActive                        = true
     }
     
     private func setLineViewBottom() {
         view.addSubview(lineViewBottom)
-        lineViewBottom.topAnchor.constraint(equalTo: viewContener.bottomAnchor, constant: 20).isActive = true
-        lineViewBottom.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 100).isActive = true
+        lineViewBottom.topAnchor.constraint(equalTo: viewContener.bottomAnchor, constant: 20).isActive                      = true
+        lineViewBottom.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 100).isActive    = true
         lineViewBottom.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -100).isActive = true
-        lineViewBottom.heightAnchor.constraint(equalToConstant: view.frame.size.height - 810).isActive = true
+        lineViewBottom.heightAnchor.constraint(equalToConstant: view.frame.size.height - 810).isActive                      = true
     }
     
     private func setButton() {
         view.addSubview(buttonShare)
-        buttonShare.topAnchor.constraint(equalTo: lineViewBottom.bottomAnchor, constant: 40).isActive = true
-        buttonShare.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 150).isActive = true
-        buttonShare.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -150).isActive = true
+        buttonShare.topAnchor.constraint(equalTo: lineViewBottom.bottomAnchor, constant: 40).isActive                       = true
+        buttonShare.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 150).isActive       = true
+        buttonShare.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -150).isActive    = true
     }
     
     private func setStackViewTop() {
         viewContener.addSubview(stackViewTop)
-        stackViewTop.topAnchor.constraint(equalTo: viewContener.topAnchor, constant: 0).isActive = true
-        stackViewTop.leadingAnchor.constraint(equalTo: viewContener.leadingAnchor, constant: 0).isActive = true
-        stackViewTop.trailingAnchor.constraint(equalTo: viewContener.trailingAnchor, constant: 0).isActive = true
-        stackViewTop.bottomAnchor.constraint(equalTo: viewContener.bottomAnchor, constant: -90).isActive = true
+        stackViewTop.topAnchor.constraint(equalTo: viewContener.topAnchor, constant: 0).isActive                            = true
+        stackViewTop.leadingAnchor.constraint(equalTo: viewContener.leadingAnchor, constant: 0).isActive                    = true
+        stackViewTop.trailingAnchor.constraint(equalTo: viewContener.trailingAnchor, constant: 0).isActive                  = true
+        stackViewTop.bottomAnchor.constraint(equalTo: viewContener.bottomAnchor, constant: -90).isActive                    = true
         
         stackViewTop.addArrangedSubview(humidityStackView)
         stackViewTop.addArrangedSubview(precipitationStackView)
@@ -393,10 +287,10 @@ class MainViewController: UIViewController {
     
     private func setStackViewBottom() {
         viewContener.addSubview(stackViewBottom)
-        stackViewBottom.topAnchor.constraint(equalTo: stackViewTop.bottomAnchor, constant: 0).isActive = true
-        stackViewBottom.leadingAnchor.constraint(equalTo: viewContener.leadingAnchor, constant: 60).isActive = true
-        stackViewBottom.trailingAnchor.constraint(equalTo: viewContener.trailingAnchor, constant: -60).isActive = true
-        stackViewBottom.bottomAnchor.constraint(equalTo: viewContener.bottomAnchor, constant: 0).isActive = true
+        stackViewBottom.topAnchor.constraint(equalTo: stackViewTop.bottomAnchor, constant: 0).isActive                      = true
+        stackViewBottom.leadingAnchor.constraint(equalTo: viewContener.leadingAnchor, constant: 60).isActive                = true
+        stackViewBottom.trailingAnchor.constraint(equalTo: viewContener.trailingAnchor, constant: -60).isActive             = true
+        stackViewBottom.bottomAnchor.constraint(equalTo: viewContener.bottomAnchor, constant: 0).isActive                   = true
         
         stackViewBottom.addArrangedSubview(windSpeedStackView)
         stackViewBottom.addArrangedSubview(windTypeStackView)

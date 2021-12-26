@@ -26,6 +26,9 @@
 		44926728276A0FFC00398EAE /* CurrentWeatherByCity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44926727276A0FFC00398EAE /* CurrentWeatherByCity.swift */; };
 		4492672A276A1B3300398EAE /* MainViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44926729276A1B3300398EAE /* MainViewController+Extension.swift */; };
 		4492672C276B420D00398EAE /* Double+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4492672B276B420D00398EAE /* Double+Extension.swift */; };
+		44C15FB52778F3BF0015FF76 /* SmallStackViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44C15FB42778F3BF0015FF76 /* SmallStackViewModel.swift */; };
+		44C15FB72778F5740015FF76 /* SmallStackViewModel+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44C15FB62778F5740015FF76 /* SmallStackViewModel+Extensions.swift */; };
+		44C15FB92778F6400015FF76 /* SmallStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44C15FB82778F6400015FF76 /* SmallStackView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -50,6 +53,9 @@
 		44926727276A0FFC00398EAE /* CurrentWeatherByCity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentWeatherByCity.swift; sourceTree = "<group>"; };
 		44926729276A1B3300398EAE /* MainViewController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainViewController+Extension.swift"; sourceTree = "<group>"; };
 		4492672B276B420D00398EAE /* Double+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Double+Extension.swift"; sourceTree = "<group>"; };
+		44C15FB42778F3BF0015FF76 /* SmallStackViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmallStackViewModel.swift; sourceTree = "<group>"; };
+		44C15FB62778F5740015FF76 /* SmallStackViewModel+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SmallStackViewModel+Extensions.swift"; sourceTree = "<group>"; };
+		44C15FB82778F6400015FF76 /* SmallStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmallStackView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -82,6 +88,7 @@
 		44206C462767385900659236 /* WeatherTZ */ = {
 			isa = PBXGroup;
 			children = (
+				44C15FB32778F35E0015FF76 /* SmallStackViewModel */,
 				44206C63276774FC00659236 /* Extensions */,
 				44206C5F2767674600659236 /* Model */,
 				44206C5E2767673000659236 /* Views */,
@@ -105,6 +112,7 @@
 		44206C5E2767673000659236 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				44C15FB82778F6400015FF76 /* SmallStackView.swift */,
 				44206C522767385D00659236 /* LaunchScreen.storyboard */,
 			);
 			path = Views;
@@ -142,6 +150,7 @@
 				44926729276A1B3300398EAE /* MainViewController+Extension.swift */,
 				4492672B276B420D00398EAE /* Double+Extension.swift */,
 				4427C6AE2771AF6A008C20E7 /* Date+Extension.swift */,
+				44C15FB62778F5740015FF76 /* SmallStackViewModel+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -152,6 +161,14 @@
 				4427C6AC27712365008C20E7 /* CustomTableViewCell.swift */,
 			);
 			path = Cell;
+			sourceTree = "<group>";
+		};
+		44C15FB32778F35E0015FF76 /* SmallStackViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				44C15FB42778F3BF0015FF76 /* SmallStackViewModel.swift */,
+			);
+			path = SmallStackViewModel;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -234,11 +251,14 @@
 				449267222768FF2800398EAE /* NetworkWeatherManager.swift in Sources */,
 				449267262769E8C400398EAE /* Int+Extension.swift in Sources */,
 				4427C6AF2771AF6A008C20E7 /* Date+Extension.swift in Sources */,
+				44C15FB72778F5740015FF76 /* SmallStackViewModel+Extensions.swift in Sources */,
 				44926728276A0FFC00398EAE /* CurrentWeatherByCity.swift in Sources */,
 				44206C482767385900659236 /* AppDelegate.swift in Sources */,
 				4492671E2768FC2700398EAE /* CurrentWeather.swift in Sources */,
 				4427C6AD27712365008C20E7 /* CustomTableViewCell.swift in Sources */,
 				4492672A276A1B3300398EAE /* MainViewController+Extension.swift in Sources */,
+				44C15FB52778F3BF0015FF76 /* SmallStackViewModel.swift in Sources */,
+				44C15FB92778F6400015FF76 /* SmallStackView.swift in Sources */,
 				449267202768FEE300398EAE /* CurrentWeatherByCoordinate.swift in Sources */,
 				44206C4A2767385900659236 /* SceneDelegate.swift in Sources */,
 			);
