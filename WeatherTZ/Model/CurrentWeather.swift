@@ -16,9 +16,11 @@ struct CurrentWeather {
     let precipitation: String?
     let pressure: Int
     let windSpeed: Double
-    let windName: String?
+    let windGust: Double
+    let pop: Int?
     let textTypeWeather: Int?
     let weatherDataHourly: [WeatherDataHourly]
+    
     
     init(currentWeatherData: CurrentWeatherByCoordinate) {
         conditionCode = currentWeatherData.current.weather.first?.id
@@ -29,7 +31,8 @@ struct CurrentWeather {
         precipitation = nil
         pressure = currentWeatherData.current.pressure
         windSpeed = currentWeatherData.current.windSpeed
-        windName = nil
+        windGust = currentWeatherData.current.windGust
+        pop = currentWeatherData.current.pop
         textTypeWeather = currentWeatherData.current.weather.first?.id
         
         var slovar = [Date: [Hourly]]()

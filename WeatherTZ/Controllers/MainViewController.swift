@@ -199,8 +199,10 @@ class MainViewController: UIViewController {
                 print("Temp \(currentWeather.temperature)")
                 print("Type weather \(currentWeather.textTypeWeather.textNameString)")
                 print("Humidity \(currentWeather.humidity)")
+                print("Precipitation \(currentWeather.pop ?? 0)")
                 print("Pressure \(currentWeather.pressure)")
                 print("WindSpeed \(currentWeather.windSpeed)")
+                print("WindGust \(currentWeather.windGust)")
             }
         }
     }
@@ -294,11 +296,13 @@ class MainViewController: UIViewController {
     }
     
     private func updateUIInterfece(weather: CurrentWeather) {
-        self.weatherImageView.image = UIImage(systemName: weather.conditionCode.systemIconNameString)
-        self.temperatureLabel.text = weather.temperature.wholeNumberString
-        self.typeWeatherLabel.text = weather.textTypeWeather?.textNameString
-        self.humidityStackView.textLabel.text = String(weather.humidity)
-        self.pressureStackView.textLabel.text = String(weather.pressure)
-        self.windSpeedStackView.textLabel.text = String(weather.windSpeed * 3.6)
+        self.weatherImageView.image                = UIImage(systemName: weather.conditionCode.systemIconNameString)
+        self.temperatureLabel.text                 = weather.temperature.wholeNumberString
+        self.typeWeatherLabel.text                 = weather.textTypeWeather?.textNameString
+        self.humidityStackView.textLabel.text      = String(weather.humidity)
+        self.precipitationStackView.textLabel.text = String(weather.pop ?? 0)
+        self.pressureStackView.textLabel.text      = String(weather.pressure)
+        self.windSpeedStackView.textLabel.text     = String(weather.windSpeed * 3.6)
+        self.windTypeStackView.textLabel.text      = String(weather.windGust * 3.6)
     }
 }
