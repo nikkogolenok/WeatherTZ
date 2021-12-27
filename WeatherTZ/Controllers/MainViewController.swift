@@ -201,9 +201,6 @@ class MainViewController: UIViewController {
                 print("Humidity \(currentWeather.humidity)")
                 print("Pressure \(currentWeather.pressure)")
                 print("WindSpeed \(currentWeather.windSpeed)")
-                
-                print("\(currentWeather.hourlyWeather)")
-                print("\(currentWeather.dailyWeather)")
             }
         }
     }
@@ -300,5 +297,8 @@ class MainViewController: UIViewController {
         self.weatherImageView.image = UIImage(systemName: weather.conditionCode.systemIconNameString)
         self.temperatureLabel.text = weather.temperature.wholeNumberString
         self.typeWeatherLabel.text = weather.textTypeWeather?.textNameString
+        self.humidityStackView.textLabel.text = String(weather.humidity)
+        self.pressureStackView.textLabel.text = String(weather.pressure)
+        self.windSpeedStackView.textLabel.text = String(weather.windSpeed * 3.6)
     }
 }

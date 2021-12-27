@@ -84,12 +84,12 @@ class CustomTableViewCell: UITableViewCell {
     }()
     
     
-    private let celsiusLabel: UILabel = {
-        let label = UILabel()
-        label.text = "°"
-        
-        return label
-    }()
+//    private let celsiusLabel: UILabel = {
+//        let label = UILabel()
+//        label.text = "°"
+//        
+//        return label
+//    }()
     
     
     // MARK: - View Life Cycle
@@ -154,10 +154,10 @@ class CustomTableViewCell: UITableViewCell {
         trailingStackView.bottomAnchor.constraint(equalTo: trailingView.bottomAnchor, constant: 0).isActive = true
       
         trailingStackView.addArrangedSubview(temperatureLabel)
-        trailingStackView.addArrangedSubview(celsiusLabel)
+        //trailingStackView.addArrangedSubview(celsiusLabel)
     }
     
-    private func updateUIInCell(_ weather: Hourly) {
+    func updateUIInCell(_ weather: Hourly) {
         self.temperatureImageView.image = UIImage(systemName: .defaultSystemWeatherImage)
         self.timeLabel.text = Date(timeIntervalSince1970: weather.dt).formatted("h:mm")
         self.temperatureLabel.text = weather.temp.wholeNumberString

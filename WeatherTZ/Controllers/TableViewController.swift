@@ -10,6 +10,11 @@ import UIKit
 class TableViewController: UIViewController {
     
     // MARK: - Variable
+    var weatherDataHourly: [WeatherDataHourly]?{
+        NetworkWeatherManager.shared.currentWeather?.weatherDataHourly
+    }
+    
+    // MARK: - GUI Variable
     let tableView: UITableView = {
         let table = UITableView()
         table.register(CustomTableViewCell.self, forCellReuseIdentifier: CustomTableViewCell.identifier)
@@ -38,35 +43,28 @@ class TableViewController: UIViewController {
 extension TableViewController: UITableViewDataSource, UITableViewDelegate {
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 7
+        return weatherDataHourly?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        if section == 0 {
-            return "Monday"
-        } else if section == 1 {
-            return "Tuesday"
-        } else if section == 2 {
-            return "Wednesday"
-        } else if section == 3 {
-            return "Thursday"
-        } else if section == 4 {
-            return "Friday"
-        } else if section == 5 {
-            return "Saturday"
-        } else if section == 6 {
-            return "Sunday"
-        }
+        guard let weatherDataHourly = weatherDataHourly else { return nil }
         
-        return ""
+        let day = weatherDataHourly[section].date
+        
+        return day.formatted("EEEE")
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+        guard let weatherDataHourly = weatherDataHourly else { return 0 }
+        return weatherDataHourly[section].hourly.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: CustomTableViewCell.identifier, for: indexPath)
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: CustomTableViewCell.identifier, for: indexPath) as? CustomTableViewCell,
+              let weatherDataHourly = weatherDataHourly else { return UITableViewCell() }
+        
+        let data = weatherDataHourly[indexPath.section].hourly[indexPath.row]
+        cell.updateUIInCell(data)
         
         return cell
     }

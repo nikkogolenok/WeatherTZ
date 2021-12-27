@@ -18,8 +18,7 @@ struct CurrentWeather {
     let windSpeed: Double
     let windName: String?
     let textTypeWeather: Int?
-    let hourlyWeather: [Hourly]
-    let dailyWeather: [Daily]
+    let weatherDataHourly: [WeatherDataHourly]
     
     init(currentWeatherData: CurrentWeatherByCoordinate) {
         conditionCode = currentWeatherData.current.weather.first?.id
@@ -32,7 +31,20 @@ struct CurrentWeather {
         windSpeed = currentWeatherData.current.windSpeed
         windName = nil
         textTypeWeather = currentWeatherData.current.weather.first?.id
-        hourlyWeather = currentWeatherData.hourly
-        dailyWeather = currentWeatherData.daily
+        
+        var slovar = [Date: [Hourly]]()
+        currentWeatherData.hourly.forEach {
+            let day = Calendar.current.startOfDay(for: Date(timeIntervalSince1970: $0.dt))
+            slovar[day, default: []].append($0)
+        }
+        
+        self.weatherDataHourly = slovar.map {
+            WeatherDataHourly(date: $0.key, hourly: $0.value)
+        }
     }
+}
+
+struct WeatherDataHourly {
+    let date: Date
+    let hourly: [Hourly]
 }

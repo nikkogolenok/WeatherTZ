@@ -10,6 +10,8 @@ import CoreLocation
 
 class NetworkWeatherManager {
     
+    var currentWeather: CurrentWeather?
+    
     class UrlParameters {
         static let city = "{city}"
         static let latitude = "{lat}"
@@ -106,6 +108,7 @@ class NetworkWeatherManager {
                 onCompletion(currentWeatherCoordinate)
             }
             else {
+                self.currentWeather = currentWeatherCoordinate
                 self.onCompletion?(currentWeatherCoordinate)
             }
         }

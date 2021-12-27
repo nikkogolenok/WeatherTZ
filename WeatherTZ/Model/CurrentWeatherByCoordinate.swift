@@ -14,9 +14,6 @@ struct CurrentWeatherByCoordinate: Codable {
     let current: Current
     let minutely: [Minutely]
     let hourly: [Hourly]
-    let daily: [Daily]
-    //let hourly: [Current]
-    //let daily: [Daily]
 
     enum CodingKeys: String, CodingKey {
         case lat
@@ -24,7 +21,6 @@ struct CurrentWeatherByCoordinate: Codable {
         case current
         case minutely
         case hourly
-        case daily
     }
 }
 
@@ -79,18 +75,5 @@ struct Hourly: Codable {
     enum CodingKeys: String, CodingKey {
         case dt
         case temp
-    }
-}
-
-// MARK: - Daily
-struct Daily: Codable {
-    let dt: Int
-    let temp: Temp
-    let weather: [Weather]
-
-    enum CodingKeys: String, CodingKey {
-        case dt
-        case temp
-        case weather
     }
 }
