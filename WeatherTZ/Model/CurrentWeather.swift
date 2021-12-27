@@ -35,13 +35,13 @@ struct CurrentWeather {
         pop = currentWeatherData.current.pop
         textTypeWeather = currentWeatherData.current.weather.first?.id
         
-        var slovar = [Date: [Hourly]]()
+        var weatherDataDictionary = [Date: [Hourly]]()
         currentWeatherData.hourly.forEach {
             let day = Calendar.current.startOfDay(for: Date(timeIntervalSince1970: $0.dt))
-            slovar[day, default: []].append($0)
+            weatherDataDictionary[day, default: []].append($0)
         }
         
-        self.weatherDataHourly = slovar.map {
+        self.weatherDataHourly = weatherDataDictionary.map {
             WeatherDataHourly(date: $0.key, hourly: $0.value)
         }
     }

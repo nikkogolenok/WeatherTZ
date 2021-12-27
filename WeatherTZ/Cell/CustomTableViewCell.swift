@@ -53,8 +53,8 @@ class CustomTableViewCell: UITableViewCell {
         stack.translatesAutoresizingMaskIntoConstraints = false
         stack.axis = .horizontal
         stack.alignment = .center
-        stack.distribution = .fillEqually
-        stack.spacing = 1
+        stack.distribution = .equalCentering
+        stack.spacing = 0
         
         return stack
     }()
@@ -82,14 +82,13 @@ class CustomTableViewCell: UITableViewCell {
         
         return label
     }()
-    
-    
-//    private let celsiusLabel: UILabel = {
-//        let label = UILabel()
-//        label.text = "°"
-//        
-//        return label
-//    }()
+        
+    private let celsiusLabel: UILabel = {
+        let label = UILabel()
+        label.text = "°"
+        
+        return label
+    }()
     
     
     // MARK: - View Life Cycle
@@ -154,7 +153,7 @@ class CustomTableViewCell: UITableViewCell {
         trailingStackView.bottomAnchor.constraint(equalTo: trailingView.bottomAnchor, constant: 0).isActive = true
       
         trailingStackView.addArrangedSubview(temperatureLabel)
-        //trailingStackView.addArrangedSubview(celsiusLabel)
+        trailingStackView.addArrangedSubview(celsiusLabel)
     }
     
     func updateUIInCell(_ weather: Hourly) {

@@ -26,7 +26,7 @@ class TableViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        title = "City"
+        title = "Forecast"
         tableView.dataSource = self
         tableView.delegate = self
         view.addSubview(tableView)
@@ -65,6 +65,7 @@ extension TableViewController: UITableViewDataSource, UITableViewDelegate {
         
         let data = weatherDataHourly[indexPath.section].hourly[indexPath.row]
         cell.updateUIInCell(data)
+        cell.selectionStyle = .none
         
         return cell
     }

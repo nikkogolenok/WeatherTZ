@@ -39,7 +39,7 @@ class SignInViewController: UIViewController {
         let tableViewController = UINavigationController(rootViewController: TableViewController())
         
         mainViewController.title = "Today"
-        tableViewController.title = "City"
+        tableViewController.title = "Forecast"
         
         tabBarVC.setViewControllers([mainViewController, tableViewController], animated: false)
         guard let items = tabBarVC.tabBar.items else { return }
