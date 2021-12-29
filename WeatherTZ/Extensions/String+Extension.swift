@@ -24,5 +24,5 @@ extension String {
     static let textAtmosphere = "Atmosphere"
     static let textClear = "Clear"
     static let textCloud = "Cloud"
-    static let textDefault = "ХЗ что за погода"
+    static let textDefault = "Default"
 }

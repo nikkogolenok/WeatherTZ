@@ -21,7 +21,6 @@ struct CurrentWeather {
     let textTypeWeather: Int?
     let weatherDataHourly: [WeatherDataHourly]
     
-    
     init(currentWeatherData: CurrentWeatherByCoordinate) {
         conditionCode = currentWeatherData.current.weather.first?.id
         cityName = nil

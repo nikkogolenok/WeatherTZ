@@ -157,8 +157,9 @@ class CustomTableViewCell: UITableViewCell {
     }
     
     func updateUIInCell(_ weather: Hourly) {
-        self.temperatureImageView.image = UIImage(systemName: .defaultSystemWeatherImage)
+        self.temperatureImageView.image = UIImage(systemName: String(weather.weather.first!.id.systemIconNameString))
         self.timeLabel.text = Date(timeIntervalSince1970: weather.dt).formatted("h:mm")
+        self.typeWeatherLabel.text = String(weather.weather.first!.id.textNameString)
         self.temperatureLabel.text = weather.temp.wholeNumberString
     }
 }
