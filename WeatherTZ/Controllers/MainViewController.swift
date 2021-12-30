@@ -39,7 +39,7 @@ class MainViewController: UIViewController {
         return image
     }()
     
-    private let cityNametextField: UITextField = {
+    private let cityNameTextField: UITextField = {
         let textField = UITextField()
         textField.placeholder = "Enter city, please"
         textField.textAlignment = .center
@@ -101,7 +101,7 @@ class MainViewController: UIViewController {
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitle("Share", for: .normal)
         button.setTitleColor(.red, for: .normal)
-        //button.addTarget(self, action: #selector(tapToButton), for: .touchUpInside)
+        button.addTarget(self, action: #selector(tapToButton), for: .touchUpInside)
         
         return button
     }()
@@ -167,6 +167,7 @@ class MainViewController: UIViewController {
         
         title = "Today"
     
+        cityNameTextField.delegate = self
         setMainStackView()
         setImageAndTextFieldStackView()
         setTwoLabelStackView()
@@ -176,7 +177,7 @@ class MainViewController: UIViewController {
         setButton()
         setStackViewTop()
         setStackViewBottom()
-        // MARK -
+        // MARK - LocationManager
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyKilometer
         locationManager.requestAlwaysAuthorization()
@@ -227,7 +228,7 @@ class MainViewController: UIViewController {
         imageAndTextFieldStackView.bottomAnchor.constraint(equalTo: mainStackView.bottomAnchor, constant: -50).isActive     = true
         
         imageAndTextFieldStackView.addArrangedSubview(weatherImageView)
-        imageAndTextFieldStackView.addArrangedSubview(cityNametextField)
+        imageAndTextFieldStackView.addArrangedSubview(cityNameTextField)
     }
     
     private func setTwoLabelStackView() {
@@ -302,7 +303,42 @@ class MainViewController: UIViewController {
         self.humidityStackView.textLabel.text      = String(weather.humidity)
         self.precipitationStackView.textLabel.text = String(weather.pop ?? 0)
         self.pressureStackView.textLabel.text      = String(weather.pressure)
-        self.windSpeedStackView.textLabel.text     = String(weather.windSpeed * 3.6)
-        self.windTypeStackView.textLabel.text      = String(weather.windGust * 3.6)
+        self.windSpeedStackView.textLabel.text     = String(weather.windSpeed.wholeNumberString)
+        self.windTypeStackView.textLabel.text      = String(weather.windGust.wholeNumberString)
+    }
+    
+    func getCoordinateFrom(address: String, completion: @escaping(_ coordinate: CLLocationCoordinate2D?, _ error: Error?) -> () ) {
+        CLGeocoder().geocodeAddressString(address) { completion($0?.first?.location?.coordinate, $1) }
+        
+        var address = ""
+        
+        cityNameTextField.text = address
+
+        getCoordinateFrom(address: address) { coordinate, error in
+            guard let coordinate = coordinate, error == nil else { return }
+            DispatchQueue.main.async {
+                print(address, "Location:", coordinate)
+            }
+
+        }
+    }
+    
+    
+    // MARK: Action
+    @objc func tapToButton() {
+        let shareController = UIActivityViewController(activityItems: ["1"], applicationActivities: nil)
+        shareController.completionWithItemsHandler = { _, bool, _, _ in
+            if bool {
+                print("Share button worked")
+            }
+        }
+        present(shareController, animated: true, completion: nil)
+    }
+}
+// MARK: - MainViewController: UITextFieldDelegate
+extension MainViewController: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        self.view.endEditing(true)
+        return false
     }
 }
