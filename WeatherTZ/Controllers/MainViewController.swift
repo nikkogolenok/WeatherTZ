@@ -57,17 +57,17 @@ class MainViewController: UIViewController {
         return stack
     }()
     
-    private let temperatureLabel: UILabel = {
-        let label = UILabel()
-        label.text = "22°C"
+    private let temperatureLabel: TwoLabel = {
+        let label = TwoLabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .center
         
         return label
     }()
     
-    private let typeWeatherLabel: UILabel = {
-        let label = UILabel()
-        label.text = "Sunny"
+    private let typeWeatherLabel: TwoLabel = {
+        let label = TwoLabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .center
         
         return label
@@ -307,37 +307,35 @@ class MainViewController: UIViewController {
         self.windTypeStackView.textLabel.text      = String(weather.windGust.wholeNumberString)
     }
     
-    func getCoordinateFrom(address: String, completion: @escaping(_ coordinate: CLLocationCoordinate2D?, _ error: Error?) -> () ) {
-        CLGeocoder().geocodeAddressString(address) { completion($0?.first?.location?.coordinate, $1) }
-        
-        var address = ""
-        
-        cityNameTextField.text = address
-
-        getCoordinateFrom(address: address) { coordinate, error in
-            guard let coordinate = coordinate, error == nil else { return }
-            DispatchQueue.main.async {
-                print(address, "Location:", coordinate)
-            }
-
+    func getCoordinateFrom(address: String) {
+        CLGeocoder().geocodeAddressString(address)  { [weak self] coordinate, error in
+            guard let coordinate = coordinate?.first?.location?.coordinate,
+                    error == nil, let self = self else { return }
+            self.networkWeaherManager.fetchCurrentWeather(forRequestType: .coordinate(latitude: coordinate.latitude, longitude: coordinate.longitude))
         }
     }
     
-    
     // MARK: Action
     @objc func tapToButton() {
-        let shareController = UIActivityViewController(activityItems: ["1"], applicationActivities: nil)
+        guard let weatherForShare = NetworkWeatherManager.shared.currentWeather?.getDataWeather() else { return }
+    
+        let shareController = UIActivityViewController(activityItems: weatherForShare, applicationActivities: nil)
         shareController.completionWithItemsHandler = { _, bool, _, _ in
             if bool {
                 print("Share button worked")
             }
         }
         present(shareController, animated: true, completion: nil)
+
     }
 }
 // MARK: - MainViewController: UITextFieldDelegate
 extension MainViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        if let address = textField.text {
+            getCoordinateFrom(address: address)
+        }
+        
         self.view.endEditing(true)
         return false
     }

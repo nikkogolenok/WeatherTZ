@@ -15,8 +15,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     // MARK: - AppDelegat
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        let mainVC = SignInViewController()
         
+        let mainVC = MainTabBarController()
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.rootViewController = mainVC
         window?.makeKeyAndVisible() 
